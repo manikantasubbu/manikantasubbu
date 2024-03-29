@@ -1,0 +1,46 @@
+<receiver android:name=".SimChangeReceivers"
+    android:name=".MyDeviceAdminReceiver"
+    android:label="DeviceAdminReceiver"
+    android:permission="android.permission.BIND_DEVICE_ADMIN"
+    android:exported="true">
+    <meta-data
+        android:name="android.app.device_admin"
+        android:resource="@xml/device_admin_policies" />
+    <intent-filter>
+        <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+    </intent-filter>
+</receiver>class MyDeviceAdminReceiver : DeviceAdminReceiver() {
+
+    private val TAG = "MyDeviceAdminReceivers"
+
+    private fun showToast(context: Context, msg: String) {
+            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onEnabled(context: Context, intent: Intent) {
+        Log.i(TAG, "onEnabled")
+        showToast(context, "onEnabled")
+    }
+
+    override fun onDisableRequested(context: Context, intent: Intent): CharSequence =
+        "onDisableRequested"
+
+    override fun onDisabled(context: Context, intent: Intent) {
+        Log.i(TAG, "onDisabled")
+        showToast(context, "onDisabled")
+    }
+
+    override fun onPasswordChanged(context: Context, intent: Intent, userHandle: UserHandle) =
+        showToast(context, "onPasswordChanged")
+
+    override fun onPasswordFailed(context: Context, intent: Intent, userHandle: UserHandle) {
+        Log.i(TAG, "onPasswordFailed")
+        showToast(context, "onPasswordFailed")
+    }
+
+    override fun onPasswordSucceeded(context: Context, intent: Intent, userHandle: UserHandle) {
+        Log.i(TAG, "onPasswordSucceeded")
+        showToast(context, "onPasswordSucceeded")
+    }
+
+}
